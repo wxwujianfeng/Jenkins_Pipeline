@@ -1,0 +1,25 @@
+pipeline {
+    agent none
+	stages {
+	    stage('run parallel Stage') {
+	        parallel {
+	            stage('mikasa_Stage_1') {
+	                agent { label "slave" }
+	                steps {
+	                    echo "at agent slave run task 1."
+	                    bat "ipconfig"
+	                    sleep 10
+	                }
+	            }
+	            stage('mikasa_Stage_2') {
+	                agent { label "master" }
+	                steps {
+	                    echo "at agent master run task 2."
+	                    bat "ipconfig"
+	                    sleep 10
+	                }
+	            }
+	        }
+	    }
+	}
+}
